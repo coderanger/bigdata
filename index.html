@@ -6,38 +6,46 @@
     <script>
         $(document).ready(function() {
 
-            img = new Image("bigdata.jpg");
+            var $eyes = $("<img />").attr("src", "eyes.png");
+            var $data = $("<img />").attr("src", "data.jpg");
 
-            var b = $('BODY');
+            $('BODY').append($data);
+            $('BODY').append($eyes);
+
             var w = $(window);
             var dataX, dataY;
             var mouseX, mouseY;
 
+            function eyes(x, y)
+            {   // Position bro dog's eyes.
+                $eyes.css({'top': y, 'left': x});
+            }
+
             function set(x, y)
             {   // Position Data.
-                b.css('background-position-x', x)
-                b.css('background-position-y', y);
+                $data.css({'top': y, 'left': x});
             }
 
             function resize()
             {   // Position Data so his eyes are centered.
-                dataX = (w.width() / 2) - 798;
-                dataY = (w.height() / 2) - 815;
+                dataX = Math.floor(w.width() / 2) - 798;
+                dataY = Math.floor(w.height() / 2) - 815;
                 set(dataX, dataY);
+                eyes(dataX + 550, dataY + 724);
             }
             resize();
             w.resize(resize);
 
             function shift(e)
-            {   // And shift him around a bit in response to mouse movement.
+            {   // Shift him around a bit in response to mouse movement.
                 var x = dataX;
                 var y = dataY;
 
                 var mouseDeltaX = mouseX - e.pageX;
                 var mouseDeltaY = mouseY - e.pageY;
 
-                dataX -= -(mouseDeltaX * 0.05);
-                dataY -= -(mouseDeltaY * 0.05);
+                dataX -= -(mouseDeltaX * 0.007);
+                dataY -= -(mouseDeltaY * 0.007);
                 mouseX = e.pageX;
                 mouseY = e.pageY;
 
@@ -57,7 +65,12 @@
     <style>
         BODY {
             margin: 0;
-            background: #060B0B url("bigdata.jpg") no-repeat;
+            padding: 0;
+            background: #060B0B;
+        }
+        IMG {
+            display: block;
+            position: fixed;
         }
     </style>
 </head>
