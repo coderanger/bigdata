@@ -1,9 +1,69 @@
 <!doctype html>
-<title>Big Data</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<body style="margin:0;background:#000;">
-<img src="bigdata.jpg">
-<audio preload=auto autobuffer autoplay loop>
-  <source src="bg.mp3" />
-  <source src="bg.ogg" />
-</audio>
+<head>
+    <title>Big Data</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            img = new Image("bigdata.jpg");
+
+            var b = $('BODY');
+            var w = $(window);
+            var dataX, dataY;
+            var mouseX, mouseY;
+
+            function set(x, y)
+            {   // Position Data.
+                b.css('background-position-x', x)
+                b.css('background-position-y', y);
+            }
+
+            function resize()
+            {   // Position Data so his eyes are centered.
+                dataX = (w.width() / 2) - 798;
+                dataY = (w.height() / 2) - 815;
+                set(dataX, dataY);
+            }
+            resize();
+            w.resize(resize);
+
+            function shift(e)
+            {   // And shift him around a bit in response to mouse movement.
+                var x = dataX;
+                var y = dataY;
+
+                var mouseDeltaX = mouseX - e.pageX;
+                var mouseDeltaY = mouseY - e.pageY;
+
+                dataX -= -(mouseDeltaX * 0.05);
+                dataY -= -(mouseDeltaY * 0.05);
+                mouseX = e.pageX;
+                mouseY = e.pageY;
+
+                set(dataX, dataY);
+
+            };
+            function mouseinit(e)
+            {   // Capture the initial mouse position.
+                mouseX = e.pageX;
+                mouseY = e.pageY;
+                $(document).unbind('mousemove');
+                $(document).mousemove(shift);
+            }
+            $(document).mousemove(mouseinit);
+        });
+    </script>
+    <style>
+        BODY {
+            margin: 0;
+            background: #060B0B url("bigdata.jpg") no-repeat;
+        }
+    </style>
+</head>
+<body> 
+    <audio preload=auto autobuffer autoplay loop>
+      <source src="bg.mp3" />
+      <source src="bg.ogg" />
+    </audio>
+</body>
